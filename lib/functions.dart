@@ -1,5 +1,5 @@
 import 'package:authapp/driver/driver_home.dart';
-import 'package:authapp/driver/driver_profile.dart';
+import 'package:authapp/driver/profile_setup.dart';
 import 'package:authapp/profile/profile_setting.dart';
 import 'package:authapp/select_role.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -192,7 +192,7 @@ Future<void> routeOnLogin(
     if (profile == false || profile == null) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DriverProfileScreen()),
+        MaterialPageRoute(builder: (context) => DriverProfileSetup()),
       );
     } else {
       Navigator.pushReplacement(

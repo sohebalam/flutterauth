@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:authapp/driver/driver_home.dart';
 import 'package:authapp/home.dart';
-import 'package:authapp/driver/driver_profile.dart';
 import 'package:authapp/profile/profile_setting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
