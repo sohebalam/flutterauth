@@ -17,6 +17,8 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
+  User? user = FirebaseAuth.instance.currentUser;
+
   bool loading = false;
   String phoneNumber = '';
   void sendOtpCode() {

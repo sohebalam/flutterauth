@@ -7,7 +7,7 @@ import 'package:authapp/firebase_options.dart';
 import 'package:authapp/home.dart';
 import 'package:authapp/auth/sign_in.dart';
 import 'package:authapp/profile/profile_setting.dart';
-import 'package:authapp/select_role.dart';
+import 'package:authapp/role_decision.dart';
 import 'package:authapp/style/contstants.dart';
 
 void main() async {

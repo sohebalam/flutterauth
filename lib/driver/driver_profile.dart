@@ -41,16 +41,11 @@ class _DriverProfileSetupState extends State<DriverProfileSetup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
         actions: [
           IconButton(
             onPressed: () async {
               await disconnect();
-              if (user != null) {
-              } else {
-                Get.to(SignInView(
-                  role: '',
-                ));
-              }
             },
             icon: const Icon(Icons.logout_outlined),
           )

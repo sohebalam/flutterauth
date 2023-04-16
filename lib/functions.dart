@@ -1,7 +1,7 @@
 import 'package:authapp/driver/driver_home.dart';
-import 'package:authapp/driver/profile_setup.dart';
+import 'package:authapp/driver/driver_profile.dart';
 import 'package:authapp/profile/profile_setting.dart';
-import 'package:authapp/select_role.dart';
+import 'package:authapp/role_decision.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
