@@ -1,39 +1,17 @@
 import 'package:authapp/functions.dart';
+import 'package:authapp/shared/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:authapp/auth/sign_in.dart';
 
+import 'package:get/get.dart';
+
 class SelectedRoleView extends StatelessWidget {
-  const SelectedRoleView({Key? key}) : super(key: key);
+  SelectedRoleView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: Visibility(
-          visible: user != null, // Show AppBar only if user is logged in
-          child: AppBar(
-            backgroundColor: Theme.of(context).primaryColor,
-            actions: [
-              IconButton(
-                onPressed: () async {
-                  await disconnect();
-                  // if (user != null) {
-                  //   // Handle user logout
-                  // } else {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => SignInView(role: '')),
-                  //   );
-                  // }
-                },
-                icon: const Icon(Icons.logout_outlined),
-              ),
-            ],
-          ),
-        ),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +19,7 @@ class SelectedRoleView extends StatelessWidget {
             const Text(
               "Welcome to Spare Park!",
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -49,39 +27,21 @@ class SelectedRoleView extends StatelessWidget {
             const Text(
               "Please select your role:",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 25,
               ),
             ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SignInView(role: 'driver'),
-                  ),
-                );
-              },
-              child: const Text(
-                'I am a Driver',
-                style: TextStyle(fontSize: 20),
-              ),
+            const SizedBox(
+              height: 70,
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SignInView(role: 'rider'),
-                  ),
-                );
-              },
-              child: const Text(
-                'I am a Rider',
-                style: TextStyle(fontSize: 20),
-              ),
+            DecisionButton('assets/driver.png', 'I am a Driver', () {
+              Get.to(() => SignInView(role: 'driver'));
+            }, Get.width * 0.6),
+            const SizedBox(
+              height: 20,
             ),
+            DecisionButton('assets/customer.png', 'I am a Rider', () {
+              Get.to(() => SignInView(role: 'rider'));
+            }, Get.width * 0.6),
           ],
         ),
       ),

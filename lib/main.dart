@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           }
 
           if (snapshot.data == null) {
-            return const SelectedRoleView();
+            return SelectedRoleView();
           }
 
           return FutureBuilder<DocumentSnapshot>(
@@ -71,10 +71,10 @@ class MyApp extends StatelessWidget {
                   } else if (snapshot.data!.exists) {
                     return Home();
                   } else {
-                    return const SelectedRoleView();
+                    return SelectedRoleView();
                   }
                 default:
-                  return const SelectedRoleView();
+                  return SelectedRoleView();
               }
             },
           );

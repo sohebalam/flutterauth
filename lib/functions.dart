@@ -65,7 +65,7 @@ Future<void> validateOtp(String smsCode, String verificationId) async {
 
 Future<void> disconnect() async {
   await _auth.signOut();
-  Get.offAll(() => const SelectedRoleView());
+  Get.offAll(() => SelectedRoleView());
 }
 
 User? get user => _auth.currentUser;
