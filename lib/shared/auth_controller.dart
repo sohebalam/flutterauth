@@ -106,23 +106,13 @@ class AuthController extends GetxController {
     }
     String phoneNumber = FirebaseAuth.instance.currentUser!.phoneNumber!;
 
-    print(
-      'dirverprofile',
-    );
-    print(
-      name,
-    );
-    print('uid');
-    print(phoneNumber);
-    print(
-      email,
-    );
-    print(
-      name,
-    );
-    FirebaseFirestore.instance.collection('users').doc(phoneNumber).set(
-        {'image': url_new, 'name': name, 'email': email, 'role': 'driver'},
-        SetOptions(merge: true)).then((value) {
+    FirebaseFirestore.instance.collection('users').doc(phoneNumber).set({
+      'image': url_new,
+      'name': name,
+      'email': email,
+      'role': 'driver',
+      'profile': true
+    }, SetOptions(merge: true)).then((value) {
       isProfileUploading(false);
 
       // Get.off(() => CarRegistrationTemplate());

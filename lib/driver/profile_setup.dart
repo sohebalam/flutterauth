@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:authapp/auth/sign_in.dart';
+import 'package:authapp/functions.dart';
 import 'package:authapp/shared/auth_controller.dart';
 import 'package:authapp/style/contstants.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +40,22 @@ class _DriverProfileSetupState extends State<DriverProfileSetup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await disconnect();
+              if (user != null) {
+              } else {
+                Get.to(SignInView(
+                  role: '',
+                ));
+              }
+            },
+            icon: const Icon(Icons.logout_outlined),
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
