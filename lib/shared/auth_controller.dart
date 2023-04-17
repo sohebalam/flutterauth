@@ -178,8 +178,9 @@ class AuthController extends GetxController {
     if (selectedImage != null) {
       url_new = await uploadImage(selectedImage);
     }
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance.collection('users').doc(uid).set({
+    String? phoneNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
+    FirebaseFirestore.instance.collection('users').doc(phoneNumber).set({
+      'profile': true,
       'image': url_new,
       'name': name,
       'home_address': home,
@@ -196,4 +197,8 @@ class AuthController extends GetxController {
       Get.to(() => HomeScreen());
     });
   }
+
+  showGoogleAutoComplete(BuildContext context) {}
+
+  buildLatLngFromAddress(String s) {}
 }

@@ -151,9 +151,6 @@ Future<UserModel?> updateStatus(String phoneNumber, String role) async {
 Future<void> routeOnLogin(
     String? role, bool? profile, BuildContext context) async {
   if (role == 'rider') {
-    print('route');
-    print(role);
-    print(profile);
     if (profile == false || profile == null) {
       Navigator.pushReplacement(
         context,
@@ -166,9 +163,6 @@ Future<void> routeOnLogin(
       );
     }
   } else if (role == 'driver') {
-    print('driver route');
-    print(role);
-    print(profile);
     if (profile == false || profile == null) {
       Navigator.pushReplacement(
         context,
