@@ -54,7 +54,7 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   Widget build(BuildContext context) {
-    print(authController.myUser.value.image!);
+    // print(authController.myUser.value.image!);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
