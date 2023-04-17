@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:authapp/driver/driver_home.dart';
 import 'package:authapp/home.dart';
 import 'package:authapp/profile/profile_setting.dart';
+import 'package:authapp/style/contstants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -154,14 +155,25 @@ class _VerificationOtpState extends State<VerificationOtp> {
                   },
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 25,
                 ),
                 loading
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
                         onPressed: onVerifySmsCode,
                         child: const Text("Verify"),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColors.primaryColor),
+                          minimumSize:
+                              MaterialStateProperty.all<Size>(Size(150, 50)),
+                          textStyle: MaterialStateProperty.all<TextStyle>(
+                              TextStyle(fontSize: 18)),
+                        ),
                       ),
+                const SizedBox(
+                  height: 20,
+                ),
                 resend
                     ? ElevatedButton(
                         onPressed: onResendSmsCode,

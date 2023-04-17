@@ -1,4 +1,5 @@
 import 'package:authapp/role_decision.dart';
+import 'package:authapp/style/contstants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
         title: const Text("Home Page"),
         actions: [
           IconButton(
