@@ -5,14 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:authapp/firebase_options.dart';
 import 'package:authapp/home.dart';
-import 'package:authapp/auth/sign_in.dart';
-import 'package:authapp/profile/profile_setting.dart';
 import 'package:authapp/role_decision.dart';
 import 'package:authapp/style/contstants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
       name: "flutterapp", options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
@@ -53,7 +50,7 @@ class MyApp extends StatelessWidget {
           }
 
           if (snapshot.data == null) {
-            return SelectedRoleView();
+            return HomeScreen();
           }
 
           return FutureBuilder<DocumentSnapshot>(
@@ -69,12 +66,12 @@ class MyApp extends StatelessWidget {
                   if (snapshot.hasError) {
                     return const Text('Error');
                   } else if (snapshot.data!.exists) {
-                    return Home();
+                    return HomeScreen();
                   } else {
-                    return SelectedRoleView();
+                    return HomeScreen();
                   }
                 default:
-                  return SelectedRoleView();
+                  return HomeScreen();
               }
             },
           );

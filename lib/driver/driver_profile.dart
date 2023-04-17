@@ -1,15 +1,13 @@
 import 'dart:io';
 
 import 'package:authapp/auth/sign_in.dart';
-import 'package:authapp/functions.dart';
+import 'package:authapp/shared/functions.dart';
 import 'package:authapp/shared/auth_controller.dart';
 import 'package:authapp/style/contstants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:green_taxi/controller/auth_controller.dart';
-// import 'package:green_taxi/utils/app_colors.dart';
-// import 'package:green_taxi/widgets/green_intro_widget.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 

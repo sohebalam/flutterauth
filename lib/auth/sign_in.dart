@@ -5,7 +5,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:authapp/auth/otp_page.dart';
 import 'package:authapp/style/contstants.dart';
 
-import '../functions.dart';
+import '../shared/functions.dart';
 
 class SignInView extends StatefulWidget {
   final String role;
@@ -29,13 +29,13 @@ class _SignInViewState extends State<SignInView> {
       authWithPhoneNumber(phoneNumber, onCodeSend: (verificationId, v) {
         loading = false;
         setState(() {});
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (c) => VerificationOtp(
-            verificationId: verificationId,
-            phoneNumber: phoneNumber,
-            role: widget.role,
-          ),
-        ));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (c) => VerificationOtp(
+        //     verificationId: verificationId,
+        //     phoneNumber: phoneNumber,
+        //     role: widget.role,
+        //   ),
+        // ));
       }, onAutoVerify: (v) async {
         await _auth.signInWithCredential(v);
         Navigator.of(context).pop();

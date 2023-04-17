@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:authapp/driver/driver_home.dart';
-import 'package:authapp/home.dart';
+import 'package:authapp/copy/home.dart';
+import 'package:authapp/models/user_model.dart';
 import 'package:authapp/profile/profile_setting.dart';
 import 'package:authapp/style/contstants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
-import 'package:authapp/functions.dart';
+import 'package:authapp/shared/functions.dart';
 
 class VerificationOtp extends StatefulWidget {
   const VerificationOtp({

@@ -1,16 +1,18 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:authapp/copy/home.dart';
+import 'package:authapp/models/user_model.dart';
+import 'package:authapp/shared/functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
-import 'package:geocoding/geocoding.dart' as geoCoding;
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_webservice/places.dart';
 import 'package:path/path.dart' as Path;
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:get/get.dart';
 
 class AuthController extends GetxController {
   String userUid = '';
@@ -44,6 +46,48 @@ class AuthController extends GetxController {
         .listen((event) {
       userCards.value = event.docs;
     });
+  }
+
+  var myUser = UserModel().obs;
+
+  // getUserInfo() {
+  //   String? phoneNumber = FirebaseAuth.instance.currentUser?.phoneNumber;
+  //   if (phoneNumber != null) {
+  //     print(phoneNumber);
+  //     FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(phoneNumber)
+  //         .snapshots()
+  //         .listen((event) {
+  //       print('above here');
+  //       myUser.value = UserModel.fromJson(event.data()!);
+  //       print(myUser.value);
+  //       print('here');
+  //     }).onError((error) {
+  //       print('Firestore error: $error');
+  //     });
+  //   }
+  // }
+
+  Future<void> getUserInfo() async {
+    String? phoneNumber = FirebaseAuth.instance.currentUser?.phoneNumber;
+    if (phoneNumber != null) {
+      print(phoneNumber);
+      try {
+        var documentSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(phoneNumber)
+            .get();
+        if (documentSnapshot.exists) {
+          print('above here');
+          myUser.value = UserModel.fromJson(documentSnapshot.data()!);
+          print(myUser.value);
+          print('here');
+        }
+      } catch (error) {
+        print('Firestore error: $error');
+      }
+    }
   }
 
   phoneAuth(String phone) async {
@@ -116,6 +160,40 @@ class AuthController extends GetxController {
       isProfileUploading(false);
 
       // Get.off(() => CarRegistrationTemplate());
+    });
+  }
+
+  storeUserInfo(
+    File? selectedImage,
+    String name,
+    String home,
+    String business,
+    String shop, {
+    String url = '',
+    LatLng? homeLatLng,
+    LatLng? businessLatLng,
+    LatLng? shoppingLatLng,
+  }) async {
+    String url_new = url;
+    if (selectedImage != null) {
+      url_new = await uploadImage(selectedImage);
+    }
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'image': url_new,
+      'name': name,
+      'home_address': home,
+      'business_address': business,
+      'shopping_address': shop,
+      'home_latlng': GeoPoint(homeLatLng!.latitude, homeLatLng.longitude),
+      'business_latlng':
+          GeoPoint(businessLatLng!.latitude, businessLatLng.longitude),
+      'shopping_latlng':
+          GeoPoint(shoppingLatLng!.latitude, shoppingLatLng.longitude),
+    }, SetOptions(merge: true)).then((value) {
+      isProfileUploading(false);
+
+      Get.to(() => HomeScreen());
     });
   }
 }

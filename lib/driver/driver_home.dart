@@ -1,5 +1,5 @@
 import 'package:authapp/auth/sign_in.dart';
-import 'package:authapp/functions.dart';
+import 'package:authapp/shared/functions.dart';
 import 'package:authapp/style/contstants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

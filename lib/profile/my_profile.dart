@@ -1,38 +1,35 @@
 import 'dart:io';
 
+import 'package:authapp/shared/auth_controller.dart';
+import 'package:authapp/shared/home_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:google_maps_webservice/places.dart';
-// import 'package:authapp/controller/auth_controller.dart';
-// import 'package:authapp/utils/app_colors.dart';
-// import 'package:authapp/widgets/green_intro_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
-import 'package:authapp/shared/functions.dart';
-import '../shared/functions.dart';
-import '../copy/home.dart';
+import 'package:google_maps_webservice/places.dart';
 
-import 'dart:io';
-
-class ProfileSettingScreen extends StatefulWidget {
-  const ProfileSettingScreen({Key? key}) : super(key: key);
+class MyProfile extends StatefulWidget {
+  const MyProfile({Key? key}) : super(key: key);
 
   @override
-  State<ProfileSettingScreen> createState() => _ProfileSettingScreenState();
+  State<MyProfile> createState() => _MyProfileState();
 }
 
-class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
+class _MyProfileState extends State<MyProfile> {
   TextEditingController nameController = TextEditingController();
   TextEditingController homeController = TextEditingController();
   TextEditingController businessController = TextEditingController();
   TextEditingController shopController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  // AuthController authController = Get.put(AuthController());
+  AuthController authController = Get.put(AuthController());
+  late LatLng homeAddress;
+  late LatLng businessAddress;
+  late LatLng shopAddress;
 
   final ImagePicker _picker = ImagePicker();
   File? selectedImage;
@@ -46,30 +43,28 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   }
 
   @override
-  bool isProfileUploading = false;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nameController.text = authController.myUser.value.name ?? "";
+    homeController.text = authController.myUser.value.hAddress ?? "";
+    shopController.text = authController.myUser.value.mallAddress ?? "";
+    businessController.text = authController.myUser.value.bAddress ?? "";
+  }
 
+  @override
   Widget build(BuildContext context) {
+    print(authController.myUser.value.image!);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Profile Screen"),
-        actions: [
-          IconButton(
-              onPressed: () async {
-                await disconnect();
-              },
-              icon: const Icon(Icons.logout_outlined))
-        ],
-      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: Get.height * 0.25,
+              height: Get.height * 0.4,
               child: Stack(
                 children: [
-                  // greenIntroWidgetWithoutLogos(),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: InkWell(
@@ -77,21 +72,34 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                         getImage(ImageSource.camera);
                       },
                       child: selectedImage == null
-                          ? Container(
-                              width: 120,
-                              height: 120,
-                              margin: EdgeInsets.only(bottom: 20),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xffD6D6D6)),
-                              child: Center(
-                                child: Icon(
-                                  Icons.camera_alt_outlined,
-                                  size: 40,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
+                          ? authController.myUser.value.image != null
+                              ? Container(
+                                  width: 120,
+                                  height: 120,
+                                  margin: EdgeInsets.only(bottom: 20),
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(authController
+                                              .myUser.value.image!),
+                                          fit: BoxFit.fill),
+                                      shape: BoxShape.circle,
+                                      color: Color(0xffD6D6D6)),
+                                )
+                              : Container(
+                                  width: 120,
+                                  height: 120,
+                                  margin: EdgeInsets.only(bottom: 20),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xffD6D6D6)),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.camera_alt_outlined,
+                                      size: 40,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
                           : Container(
                               width: 120,
                               height: 120,
@@ -141,7 +149,15 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                       }
 
                       return null;
-                    }),
+                    }, onTap: () async {
+                      Prediction? p = await showGoogleAutoComplete(context);
+
+                      if (p != null) {
+                        homeAddress =
+                            await buildLatLngFromAdress(p.description!);
+                        homeController.text = p.description!;
+                      }
+                    }, readOnly: true),
                     const SizedBox(
                       height: 10,
                     ),
@@ -152,6 +168,14 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                       }
 
                       return null;
+                    }, onTap: () async {
+                      Prediction? p = await showGoogleAutoComplete(context);
+
+                      if (p != null) {
+                        businessAddress =
+                            await buildLatLngFromAdress(p.description!);
+                        businessController.text = p.description!;
+                      }
                     }),
                     const SizedBox(
                       height: 10,
@@ -165,69 +189,39 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                       }
 
                       return null;
+                    }, onTap: () async {
+                      Prediction? p = await showGoogleAutoComplete(context);
+
+                      if (p != null) {
+                        shopAddress =
+                            await buildLatLngFromAdress(p.description!);
+                        shopController.text = p.description!;
+                      }
                     }),
                     const SizedBox(
                       height: 30,
                     ),
-                    ElevatedButton(
-                      onPressed: isProfileUploading
-                          ? null
-                          : () async {
-                              if (!formKey.currentState!.validate()) {
-                                return;
-                              }
+                    Obx(() => authController.isProfileUploading.value
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : greenButton('Update', () {
+                            if (!formKey.currentState!.validate()) {
+                              return;
+                            }
 
-                              if (selectedImage == null) {
-                                Fluttertoast.showToast(
-                                  msg: "Warning', 'Please add your image",
-                                );
-                                return;
-                              }
-
-                              setState(() {
-                                isProfileUploading = true;
-                              });
-
-                              await storeUserInfo(
-                                selectedImage!,
+                            authController.isProfileUploading(true);
+                            authController.storeUserInfo(
+                                selectedImage,
                                 nameController.text,
                                 homeController.text,
                                 businessController.text,
                                 shopController.text,
-                                context,
-                              );
-
-                              setState(() {
-                                isProfileUploading = false;
-                              });
-
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => HomeScreen(),
-                                ),
-                              );
-                            },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        backgroundColor: isProfileUploading
-                            ? Theme.of(context).disabledColor
-                            : Theme.of(context).primaryColor,
-                      ),
-                      child: isProfileUploading
-                          ? CircularProgressIndicator()
-                          : Text(
-                              'Submit',
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                    )
+                                url: authController.myUser.value.image ?? "",
+                                homeLatLng: homeAddress,
+                                businessLatLng: businessAddress,
+                                shoppingLatLng: shopAddress);
+                          })),
                   ],
                 ),
               ),
@@ -239,7 +233,8 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   }
 
   TextFieldWidget(String title, IconData iconData,
-      TextEditingController controller, Function validator) {
+      TextEditingController controller, Function validator,
+      {Function? onTap, bool readOnly = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -266,6 +261,8 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
               ],
               borderRadius: BorderRadius.circular(8)),
           child: TextFormField(
+            readOnly: readOnly,
+            onTap: () => onTap!(),
             validator: (input) => validator(input),
             controller: controller,
             style: GoogleFonts.poppins(
@@ -285,6 +282,21 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
           ),
         )
       ],
+    );
+  }
+
+  Widget greenButton(String title, Function onPressed) {
+    return MaterialButton(
+      minWidth: Get.width,
+      height: 50,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      color: Theme.of(context).primaryColor,
+      onPressed: () => onPressed(),
+      child: Text(
+        title,
+        style: GoogleFonts.poppins(
+            fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
     );
   }
 }

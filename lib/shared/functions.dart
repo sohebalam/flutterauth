@@ -1,5 +1,6 @@
 import 'package:authapp/driver/driver_home.dart';
 import 'package:authapp/driver/driver_profile.dart';
+import 'package:authapp/models/user_model.dart';
 import 'package:authapp/profile/profile_setting.dart';
 import 'package:authapp/role_decision.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +14,7 @@ import 'package:get/get.dart';
 // import 'package:green_taxi/views/profile_settings.dart';
 import 'package:path/path.dart' as Path;
 
-import 'home.dart';
+import '../home.dart';
 
 final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -110,37 +111,6 @@ Future<void> storeUserInfo(File selectedImage, String name, String home,
   }
 }
 
-class UserModel {
-  String role;
-  String? name;
-  String? bAddress;
-  String? hAddress;
-  String? mallAddress;
-  String? image;
-  bool? profile = false;
-
-  // LatLng? homeAddress;
-  // LatLng? bussinessAddres;
-  // LatLng? shoppingAddress;
-
-  var phoneNumber;
-
-  UserModel({
-    required this.phoneNumber,
-    required this.role,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'role': role,
-    };
-  }
-
-  static UserModel fromMap(Map<String, dynamic> map) {
-    return UserModel(role: map['role'], phoneNumber: null);
-  }
-}
-
 Future<UserModel?> updateStatus(String phoneNumber, String role) async {
   final userDocRef =
       FirebaseFirestore.instance.collection("users").doc(phoneNumber);
@@ -185,7 +155,7 @@ Future<void> routeOnLogin(
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     }
   } else if (role == 'driver') {
@@ -219,4 +189,37 @@ storeDriverProfile(
       SetOptions(merge: true)).then((value) {
     // Get.off(() => CarRegistrationTemplate());
   });
+}
+
+Future<UserModel?> updateUserStatus(String phoneNumber, String role) async {
+  final userDocRef =
+      FirebaseFirestore.instance.collection("users").doc(phoneNumber);
+
+  try {
+    final userDoc = await userDocRef.get();
+    if (!userDoc.exists) {
+      final newUser = UserModel(
+        role: role,
+        phoneNumber: null,
+      );
+      final newUserMap = newUser.toMap();
+      await userDocRef.set(newUserMap);
+
+      // Retrieve the newly created user document
+      final newUserDoc = await userDocRef.get();
+
+      // Retrieve the user model from the user document and print the role to console
+      final user = UserModel.fromMap(newUserDoc.data()!);
+      print(user.role);
+      return user; // user was created
+    }
+
+    // Retrieve the user model from the user document and print the role to console
+    final user = UserModel.fromMap(userDoc.data()!);
+    print(user.role);
+    return user; // user already existed
+  } catch (e) {
+    // Handle the error
+  }
+  return null;
 }

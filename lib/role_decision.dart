@@ -1,6 +1,4 @@
-import 'package:authapp/functions.dart';
 import 'package:authapp/shared/widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:authapp/auth/sign_in.dart';
 
