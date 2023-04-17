@@ -1,3 +1,4 @@
+import 'package:authapp/shared/functions.dart';
 import 'package:authapp/shared/home_widgets/others.dart';
 import 'package:authapp/shared/home_widgets/text_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Home Page"),
+        backgroundColor: Theme.of(context).primaryColor,
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await disconnect();
+              // if (user != null) {
+              // } else {
+              //   Get.to(SignInView());
+              // }
+            },
+            icon: const Icon(Icons.logout_outlined),
+          )
+        ],
+      ),
       drawer: MyDrawer(context),
       body: Stack(
         children: [

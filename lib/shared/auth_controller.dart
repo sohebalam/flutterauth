@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:authapp/copy/home.dart';
+import 'package:authapp/home.dart';
 import 'package:authapp/models/user_model.dart';
 import 'package:authapp/shared/functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

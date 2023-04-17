@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:authapp/driver/driver_home.dart';
 import 'package:authapp/driver/driver_profile.dart';
 import 'package:authapp/models/user_model.dart';
@@ -122,6 +124,8 @@ Future<UserModel?> updateStatus(String phoneNumber, String role) async {
         role: role,
         phoneNumber: null,
       );
+      // print(role);
+      // debugger();
       final newUserMap = newUser.toMap();
       await userDocRef.set(newUserMap);
 
@@ -147,6 +151,9 @@ Future<UserModel?> updateStatus(String phoneNumber, String role) async {
 Future<void> routeOnLogin(
     String? role, bool? profile, BuildContext context) async {
   if (role == 'rider') {
+    print('route');
+    print(role);
+    print(profile);
     if (profile == false || profile == null) {
       Navigator.pushReplacement(
         context,
@@ -159,6 +166,9 @@ Future<void> routeOnLogin(
       );
     }
   } else if (role == 'driver') {
+    print('driver route');
+    print(role);
+    print(profile);
     if (profile == false || profile == null) {
       Navigator.pushReplacement(
         context,

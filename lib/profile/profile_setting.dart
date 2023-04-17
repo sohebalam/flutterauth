@@ -15,7 +15,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 import 'package:authapp/shared/functions.dart';
 import '../shared/functions.dart';
-import '../copy/home.dart';
+import '../home.dart';
 
 import 'dart:io';
 

@@ -1,9 +1,5 @@
 import 'dart:async';
-
-import 'package:authapp/driver/driver_home.dart';
-import 'package:authapp/copy/home.dart';
 import 'package:authapp/models/user_model.dart';
-import 'package:authapp/profile/profile_setting.dart';
 import 'package:authapp/style/contstants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -101,10 +97,16 @@ class _VerificationOtpState extends State<VerificationOtp> {
     final name = data['name'] as String?;
     final profile = data['profile'] as bool?;
     final role = data['role'] as String?;
-
     print('otp');
 
-    await routeOnLogin(role, profile, context);
+    print(
+      role,
+    );
+    print(
+      profile,
+    );
+
+    await routeOnLogin(widget.role, profile, context);
 
     loading = true;
     setState(() {});
