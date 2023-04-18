@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:authapp/driver/car_registration/car_registration_template.dart';
 import 'package:authapp/driver/driver_home.dart';
 import 'package:authapp/driver/driver_profile.dart';
 import 'package:authapp/models/user_model.dart';
@@ -192,7 +193,7 @@ storeDriverProfile(
   FirebaseFirestore.instance.collection('users').doc(uid).set(
       {'image': url_new, 'name': name, 'email': email, 'isDriver': true},
       SetOptions(merge: true)).then((value) {
-    // Get.off(() => CarRegistrationTemplate());
+    Get.off(() => CarRegistrationTemplate());
   });
 }
 
@@ -227,4 +228,19 @@ Future<UserModel?> updateUserStatus(String phoneNumber, String role) async {
     // Handle the error
   }
   return null;
+}
+
+Future<bool> uploadCarEntry(Map<String, dynamic> carData) async {
+  bool isUploaded = false;
+  print("here");
+  String? phoneNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
+
+  await FirebaseFirestore.instance
+      .collection('users')
+      .doc(phoneNumber)
+      .set(carData, SetOptions(merge: true));
+
+  isUploaded = true;
+  print("upload");
+  return isUploaded;
 }

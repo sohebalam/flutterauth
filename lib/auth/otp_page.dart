@@ -97,14 +97,6 @@ class _VerificationOtpState extends State<VerificationOtp> {
     final name = data['name'] as String?;
     final profile = data['profile'] as bool?;
     final role = data['role'] as String?;
-    print('otp');
-
-    print(
-      role,
-    );
-    print(
-      profile,
-    );
 
     await routeOnLogin(widget.role, profile, context);
 

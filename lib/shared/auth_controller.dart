@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:authapp/driver/car_registration/car_registration_template.dart';
 import 'package:authapp/home.dart';
 import 'package:authapp/models/user_model.dart';
 import 'package:authapp/shared/functions.dart';
@@ -140,7 +141,7 @@ class AuthController extends GetxController {
     }, SetOptions(merge: true)).then((value) {
       isProfileUploading(false);
 
-      // Get.off(() => CarRegistrationTemplate());
+      Get.off(() => CarRegistrationTemplate());
     });
   }
 

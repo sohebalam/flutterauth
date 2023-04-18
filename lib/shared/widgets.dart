@@ -11,6 +11,41 @@ import 'package:authapp/profile/my_profile.dart';
 
 AuthController authController = Get.put(AuthController());
 
+Widget IntroWidget({String title = "Profile Settings", String? subtitle}) {
+  return Container(
+    height: Get.height * 0.3,
+    width: Get.width,
+    decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/mask.png'), fit: BoxFit.fill)),
+    child: Container(
+        height: Get.height * 0.1,
+        width: Get.width,
+        margin: EdgeInsets.only(bottom: Get.height * 0.001),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: GoogleFonts.poppins(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+            if (subtitle != null)
+              Text(
+                subtitle,
+                style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white),
+              ),
+          ],
+        )),
+  );
+}
+
 PreferredSizeWidget appBarWidget(
     {required String text,
     double fontSize = 20,

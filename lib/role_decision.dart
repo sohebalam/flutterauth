@@ -1,3 +1,4 @@
+import 'package:authapp/driver/car_registration/car_registration_template.dart';
 import 'package:authapp/shared/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:authapp/auth/sign_in.dart';
@@ -32,6 +33,7 @@ class SelectedRoleView extends StatelessWidget {
               height: 70,
             ),
             DecisionButton('assets/driver.png', 'I am a Driver', () {
+              // Get.to(() => CarRegistrationTemplate());
               Get.to(() => SignInView(role: 'driver'));
             }, Get.width * 0.6),
             const SizedBox(
