@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:authapp/shared/auth_controller.dart';
 import 'package:authapp/shared/functions.dart';
 import 'package:authapp/shared/home_functions.dart';
+import 'package:authapp/shared/widgets.dart';
 import 'package:authapp/style/contstants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,16 +45,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Profile Screen"),
-        actions: [
-          IconButton(
-              onPressed: () async {
-                await disconnect();
-              },
-              icon: const Icon(Icons.logout_outlined))
-        ],
-      ),
+      appBar: appBarWidget(text: "Profile Setting"),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

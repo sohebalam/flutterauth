@@ -1,5 +1,6 @@
 import 'package:authapp/screens/cards.dart';
 import 'package:authapp/shared/auth_controller.dart';
+import 'package:authapp/shared/functions.dart';
 import 'package:authapp/style/contstants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,6 +10,32 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:authapp/profile/my_profile.dart';
 
 AuthController authController = Get.put(AuthController());
+
+PreferredSizeWidget appBarWidget({
+  required String text,
+  double fontSize = 20,
+  FontWeight fontWeight = FontWeight.normal,
+}) {
+  return AppBar(
+    title: Center(
+      child: Text(text,
+          style: TextStyle(fontSize: fontSize, fontWeight: fontWeight)),
+    ),
+    backgroundColor: AppColors.primaryColor,
+    actions: [
+      IconButton(
+        onPressed: () async {
+          await disconnect();
+          // if (user != null) {
+          //   Get.to(SignInView());
+          // } else {
+          // }
+        },
+        icon: const Icon(Icons.logout_outlined),
+      )
+    ],
+  );
+}
 
 Widget DecisionButton(
     String icon, String text, Function onPressed, double width,

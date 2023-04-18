@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:authapp/shared/auth_controller.dart';
 import 'package:authapp/shared/home_functions.dart';
+import 'package:authapp/shared/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -56,6 +57,7 @@ class _MyProfileState extends State<MyProfile> {
   Widget build(BuildContext context) {
     // print(authController.myUser.value.image!);
     return Scaffold(
+      appBar: appBarWidget(text: "My Profile"),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

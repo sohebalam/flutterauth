@@ -1,4 +1,5 @@
 import 'package:authapp/shared/functions.dart';
+import 'package:authapp/shared/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -49,9 +50,7 @@ class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      appBar: appBarWidget(text: "Sign In"),
       body: Builder(builder: (context) {
         return Center(
           child: SingleChildScrollView(

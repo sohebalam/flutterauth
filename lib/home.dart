@@ -67,22 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home Page"),
-        backgroundColor: Theme.of(context).primaryColor,
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await disconnect();
-              // if (user != null) {
-              // } else {
-              //   Get.to(SignInView());
-              // }
-            },
-            icon: const Icon(Icons.logout_outlined),
-          )
-        ],
-      ),
+      appBar: appBarWidget(text: "Home Page"),
       drawer: MyDrawer(context),
       body: Stack(
         children: [
