@@ -64,7 +64,7 @@ class _MyProfileState extends State<MyProfile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: Get.height * 0.4,
+              height: Get.height * 0.25,
               child: Stack(
                 children: [
                   Align(

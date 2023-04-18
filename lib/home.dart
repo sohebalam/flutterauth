@@ -65,10 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
     loadCustomMarker();
   }
 
+  User? user = FirebaseAuth.instance.currentUser;
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(text: "Home Page"),
-      drawer: MyDrawer(context),
+      drawer: MyDrawer(context, user),
       body: Stack(
         children: [
           Positioned(
@@ -88,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
               initialCameraPosition: _kGooglePlex,
             ),
           ),
-          // Builder(builder: (context) => buildProfileTile(context)),
+          Builder(builder: (context) => buildProfileTile(context)),
           Builder(builder: (context) => buildTextField(context, setState)),
           showSourceField
               ? Builder(

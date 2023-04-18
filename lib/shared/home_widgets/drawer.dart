@@ -1,12 +1,13 @@
 import 'package:authapp/profile/my_profile.dart';
 import 'package:authapp/screens/cards.dart';
+import 'package:authapp/shared/functions.dart';
 import 'package:authapp/shared/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-MyDrawer(user) {
+MyDrawer(context, user) {
   return Drawer(
     child: Column(
       children: [
@@ -87,7 +88,11 @@ MyDrawer(user) {
               buildDrawerItem(title: 'Promo Codes', onPressed: () {}),
               buildDrawerItem(title: 'Settings', onPressed: () {}),
               buildDrawerItem(title: 'Support', onPressed: () {}),
-              buildDrawerItem(title: 'Log Out', onPressed: () {}),
+              buildDrawerItem(
+                  title: 'Log Out',
+                  onPressed: () async {
+                    await disconnect();
+                  }),
             ],
           ),
         ),
