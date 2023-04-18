@@ -28,7 +28,7 @@ class AuthController extends GetxController {
   storeUserCard(String number, String expiry, String cvv, String name) async {
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .doc(FirebaseAuth.instance.currentUser!.phoneNumber)
         .collection('cards')
         .add({'name': name, 'number': number, 'cvv': cvv, 'expiry': expiry});
 
@@ -40,7 +40,7 @@ class AuthController extends GetxController {
   getUserCards() {
     FirebaseFirestore.instance
         .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .doc(FirebaseAuth.instance.currentUser!.phoneNumber)
         .collection('cards')
         .snapshots()
         .listen((event) {
@@ -49,25 +49,6 @@ class AuthController extends GetxController {
   }
 
   var myUser = UserModel().obs;
-
-  // getUserInfo() {
-  //   String? phoneNumber = FirebaseAuth.instance.currentUser?.phoneNumber;
-  //   if (phoneNumber != null) {
-  //     print(phoneNumber);
-  //     FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(phoneNumber)
-  //         .snapshots()
-  //         .listen((event) {
-  //       print('above here');
-  //       myUser.value = UserModel.fromJson(event.data()!);
-  //       print(myUser.value);
-  //       print('here');
-  //     }).onError((error) {
-  //       print('Firestore error: $error');
-  //     });
-  //   }
-  // }
 
   Future<void> getUserInfo() async {
     String? phoneNumber = FirebaseAuth.instance.currentUser?.phoneNumber;

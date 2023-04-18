@@ -69,7 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(text: "Home Page"),
+      appBar: appBarWidget(
+        text: "Home Page",
+      ),
       drawer: MyDrawer(context, user),
       body: Stack(
         children: [

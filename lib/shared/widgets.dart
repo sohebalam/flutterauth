@@ -11,11 +11,11 @@ import 'package:authapp/profile/my_profile.dart';
 
 AuthController authController = Get.put(AuthController());
 
-PreferredSizeWidget appBarWidget({
-  required String text,
-  double fontSize = 20,
-  FontWeight fontWeight = FontWeight.normal,
-}) {
+PreferredSizeWidget appBarWidget(
+    {required String text,
+    double fontSize = 20,
+    FontWeight fontWeight = FontWeight.normal,
+    context}) {
   return AppBar(
     title: Center(
       child: Text(text,

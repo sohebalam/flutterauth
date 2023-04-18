@@ -67,6 +67,7 @@ Future<void> validateOtp(String smsCode, String verificationId) async {
 }
 
 Future<void> disconnect() async {
+  print("her");
   await _auth.signOut();
   Get.offAll(() => SelectedRoleView());
 }
