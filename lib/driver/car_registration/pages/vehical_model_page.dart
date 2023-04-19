@@ -83,6 +83,7 @@ class _VehicalModelPageState extends State<VehicalModelPage> {
         ElevatedIconButton(
           isValid: _isValid,
           onNext: widget.onNext,
+          text: 'model',
         ),
       ],
     );

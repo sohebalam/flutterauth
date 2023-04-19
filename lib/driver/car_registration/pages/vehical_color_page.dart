@@ -165,6 +165,7 @@ class _VehicalColorPageState extends State<VehicalColorPage> {
           ElevatedIconButton(
             isValid: isValid,
             onNext: widget.onNext,
+            text: 'colour',
           ),
         ],
       ),

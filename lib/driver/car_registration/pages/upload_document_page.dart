@@ -150,6 +150,7 @@ class _UploadDocumentPageState extends State<UploadDocumentPage> {
         ElevatedIconButton(
           isValid: isValid,
           onNext: widget.onNext,
+          text: 'document',
         ),
       ],
     );

@@ -71,6 +71,7 @@ class _VehicalTypePageState extends State<VehicalTypePage> {
         ElevatedIconButton(
           isValid: _isValid,
           onNext: widget.onNext,
+          text: 'vehicle  type',
         ),
       ],
     );

@@ -369,7 +369,10 @@ class ElevatedIconButton extends StatelessWidget {
   final bool isValid;
   final VoidCallback onNext;
 
-  ElevatedIconButton({required this.isValid, required this.onNext});
+  var text;
+
+  ElevatedIconButton(
+      {required this.isValid, required this.onNext, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -383,7 +386,7 @@ class ElevatedIconButton extends StatelessWidget {
               : () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Please select a location'),
+                      content: Text('Please select a ${text}'),
                       duration: Duration(seconds: 1),
                     ),
                   );

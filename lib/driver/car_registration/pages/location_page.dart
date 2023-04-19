@@ -73,6 +73,7 @@ class _LocationPageState extends State<LocationPage> {
         ElevatedIconButton(
           isValid: _isValid,
           onNext: widget.onNext,
+          text: 'location',
         ),
       ],
     );

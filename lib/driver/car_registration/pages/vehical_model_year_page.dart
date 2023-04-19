@@ -70,13 +70,14 @@ class _VehicalModelYearPageState extends State<VehicalModelYearPage> {
                 _selectedYear = years[value];
                 _isValid = true;
               });
-              widget.onSelect(_selectedYear);
+              widget.onSelect(int.parse(_selectedYear));
             },
           ),
         )),
         ElevatedIconButton(
           isValid: _isValid,
           onNext: widget.onNext,
+          text: 'year',
         ),
       ],
     );
