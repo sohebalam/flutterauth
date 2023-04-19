@@ -1,20 +1,28 @@
+import 'package:authapp/shared/widgets.dart';
 import 'package:authapp/style/contstants.dart';
 import 'package:flutter/material.dart';
 
 class VehicalTypePage extends StatefulWidget {
-  VehicalTypePage(
-      {Key? key, required this.onSelect, required this.selectedVehical})
-      : super(key: key);
+  final Function() onNext;
+
+  VehicalTypePage({
+    Key? key,
+    required this.onSelect,
+    required this.selectedVehical,
+    required this.onNext,
+  }) : super(key: key);
 
   final String selectedVehical;
   final Function onSelect;
-
   @override
   State<VehicalTypePage> createState() => _VehicalTypePageState();
 }
 
 class _VehicalTypePageState extends State<VehicalTypePage> {
   List<String> vehicalType = ['Economy', 'Business', 'Middle'];
+
+  bool _isValid = false;
+  String _selectedType = '';
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +42,13 @@ class _VehicalTypePageState extends State<VehicalTypePage> {
           child: ListView.builder(
               itemBuilder: (ctx, i) {
                 return ListTile(
-                  onTap: () => widget.onSelect(vehicalType[i]),
+                  onTap: () {
+                    setState(() {
+                      _selectedType = vehicalType[i];
+                      _isValid = true;
+                    });
+                    widget.onSelect(_selectedType);
+                  },
                   visualDensity: VisualDensity(vertical: -4),
                   title: Text(vehicalType[i]),
                   trailing: widget.selectedVehical == vehicalType[i]
@@ -53,6 +67,10 @@ class _VehicalTypePageState extends State<VehicalTypePage> {
                 );
               },
               itemCount: vehicalType.length),
+        ),
+        ElevatedIconButton(
+          isValid: _isValid,
+          onNext: widget.onNext,
         ),
       ],
     );

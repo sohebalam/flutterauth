@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:authapp/driver/car_registration/pages/document_uploaded_page.dart';
 import 'package:authapp/driver/car_registration/pages/location_page.dart';
 import 'package:authapp/driver/car_registration/pages/upload_document_page.dart';
 import 'package:authapp/driver/car_registration/pages/vehical_color_page.dart';
@@ -69,6 +68,15 @@ class _CarRegistrationTemplateState extends State<CarRegistrationTemplate> {
                         selectedLocation = location;
                       });
                     },
+                    onNext: () {
+                      if (currentPage < 7) {
+                        pageController.animateToPage(currentPage + 1,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeIn);
+                      } else {
+                        uploadDriverCarEntry();
+                      }
+                    },
                   ),
                   VehicalTypePage(
                     selectedVehical: selectedVehicalType,
@@ -76,6 +84,15 @@ class _CarRegistrationTemplateState extends State<CarRegistrationTemplate> {
                       setState(() {
                         selectedVehicalType = vehicalType;
                       });
+                    },
+                    onNext: () {
+                      if (currentPage < 7) {
+                        pageController.animateToPage(currentPage + 1,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeIn);
+                      } else {
+                        uploadDriverCarEntry();
+                      }
                     },
                   ),
                   VehicalMakePage(
@@ -85,6 +102,15 @@ class _CarRegistrationTemplateState extends State<CarRegistrationTemplate> {
                         selectedVehicalMake = vehicalMake;
                       });
                     },
+                    onNext: () {
+                      if (currentPage < 7) {
+                        pageController.animateToPage(currentPage + 1,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeIn);
+                      } else {
+                        uploadDriverCarEntry();
+                      }
+                    },
                   ),
                   VehicalModelPage(
                     selectedModel: selectedVehicalModel,
@@ -93,6 +119,15 @@ class _CarRegistrationTemplateState extends State<CarRegistrationTemplate> {
                         selectedVehicalModel = vehicalModel;
                       });
                     },
+                    onNext: () {
+                      if (currentPage < 7) {
+                        pageController.animateToPage(currentPage + 1,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeIn);
+                      } else {
+                        uploadDriverCarEntry();
+                      }
+                    },
                   ),
                   VehicalModelYearPage(
                     onSelect: (int year) {
@@ -100,50 +135,60 @@ class _CarRegistrationTemplateState extends State<CarRegistrationTemplate> {
                         selectModelYear = year.toString();
                       });
                     },
+                    onNext: () {
+                      if (currentPage < 7) {
+                        pageController.animateToPage(currentPage + 1,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeIn);
+                      } else {
+                        uploadDriverCarEntry();
+                      }
+                    },
                   ),
                   VehicalNumberPage(
                     controller: vehicalNumberController,
+                    onNext: () {
+                      if (currentPage < 7) {
+                        pageController.animateToPage(currentPage + 1,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeIn);
+                      } else {
+                        uploadDriverCarEntry();
+                      }
+                    },
                   ),
                   VehicalColorPage(
                     onColorSelected: (String selectedColor) {
                       vehicalColor = selectedColor;
                     },
-                  ),
-                  UploadDocumentPage(
-                    onImageSelected: (File image) {
-                      document = image;
+                    onNext: () {
+                      if (currentPage < 7) {
+                        pageController.animateToPage(currentPage + 1,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeIn);
+                      } else {
+                        uploadDriverCarEntry();
+                      }
                     },
                   ),
-                  DocumentUploadedPage()
+                  UploadDocumentPage(
+                    onImageSelected: (File? image) {
+                      document = image;
+                    },
+                    onNext: () {
+                      if (currentPage < 7) {
+                        pageController.animateToPage(currentPage + 1,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeIn);
+                      } else {
+                        uploadDriverCarEntry();
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
           ),
-          Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Obx(() => isUploading.value
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : FloatingActionButton(
-                        onPressed: () {
-                          if (currentPage < 8) {
-                            pageController.animateToPage(currentPage + 1,
-                                duration: const Duration(seconds: 1),
-                                curve: Curves.easeIn);
-                          } else {
-                            uploadDriverCarEntry();
-                          }
-                        },
-                        child: Icon(
-                          Icons.arrow_forward,
-                          color: Colors.white,
-                        ),
-                        backgroundColor: AppColors.primaryColor,
-                      )),
-              )),
         ],
       ),
     );

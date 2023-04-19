@@ -320,3 +320,104 @@ buildDrawerItem({
     ),
   );
 }
+
+class ValidationButton extends StatelessWidget {
+  const ValidationButton({
+    Key? key,
+    required this.pageNumber,
+    required this.validateFunction,
+    required this.onNext,
+  }) : super(key: key);
+
+  final int pageNumber;
+  final Function() onNext;
+  final bool Function() validateFunction;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: validateFunction()
+          ? onNext
+          : () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Please make a selection'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            },
+      child: Text('Next'),
+    );
+  }
+
+  PageValidationResult validate() {
+    return PageValidationResult(
+      pageNumber: pageNumber,
+      isValid: validateFunction(),
+    );
+  }
+}
+
+class PageValidationResult {
+  final int pageNumber;
+  final bool isValid;
+
+  PageValidationResult({required this.pageNumber, required this.isValid});
+}
+
+void _showSnackbar(String message, BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 1),
+    ),
+  );
+}
+
+class ElevatedIconButton extends StatelessWidget {
+  final bool isValid;
+  final VoidCallback onNext;
+
+  ElevatedIconButton({required this.isValid, required this.onNext});
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8.0, 8.0, 0, 18.0),
+        child: ElevatedButton(
+          onPressed: isValid
+              ? onNext
+              : () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please select a location'),
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
+                },
+          child: Container(
+            height: 56.0,
+            width: 56.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors
+                  .primaryColor, // Change this to AppColors.primaryColor
+            ),
+            child: Center(
+              child: Icon(
+                Icons.arrow_forward,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            shape: CircleBorder(),
+          ),
+        ),
+      ),
+    );
+  }
+}

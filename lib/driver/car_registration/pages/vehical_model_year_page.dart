@@ -1,12 +1,15 @@
 import 'dart:developer';
 
+import 'package:authapp/shared/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class VehicalModelYearPage extends StatefulWidget {
-  VehicalModelYearPage({Key? key, required this.onSelect}) : super(key: key);
+  VehicalModelYearPage({Key? key, required this.onSelect, required this.onNext})
+      : super(key: key);
 
   final Function onSelect;
+  final Function() onNext;
 
   @override
   State<VehicalModelYearPage> createState() => _VehicalModelYearPageState();
@@ -26,6 +29,14 @@ class _VehicalModelYearPageState extends State<VehicalModelYearPage> {
     2009,
     2010,
   ];
+
+  bool _isValid = false;
+  int _selectedYear = 0;
+
+  _VehicalModelYearPageState() {
+    _isValid = false;
+    _selectedYear = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +65,18 @@ class _VehicalModelYearPageState extends State<VehicalModelYearPage> {
             },
             itemExtent: 100,
             onSelectedItemChanged: (value) {
-              // debugger();
-              widget.onSelect(years[value]);
+              setState(() {
+                _selectedYear = years[value];
+                _isValid = true;
+              });
+              widget.onSelect(_selectedYear);
             },
           ),
         )),
+        ElevatedIconButton(
+          isValid: _isValid,
+          onNext: widget.onNext,
+        ),
       ],
     );
   }

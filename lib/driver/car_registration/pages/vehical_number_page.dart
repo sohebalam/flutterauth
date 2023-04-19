@@ -1,74 +1,99 @@
+import 'package:authapp/shared/widgets.dart';
+import 'package:authapp/style/contstants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class VehicalNumberPage extends StatefulWidget {
-  const VehicalNumberPage({Key? key, required this.controller})
+  const VehicalNumberPage(
+      {Key? key, required this.controller, required this.onNext})
       : super(key: key);
 
   final TextEditingController controller;
+  final Function() onNext;
+
+  // bool notValid = true;
 
   @override
   State<VehicalNumberPage> createState() => _VehicalNumberPageState();
 }
 
 class _VehicalNumberPageState extends State<VehicalNumberPage> {
-  TextFieldWidget(
-      String title, TextEditingController controller, Function validator,
-      {Function? onTap, bool readOnly = false}) {
-    return Container(
-      width: Get.width,
-      margin: EdgeInsets.symmetric(horizontal: 2),
-      // height: 50,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                spreadRadius: 2,
-                blurRadius: 1)
-          ],
-          borderRadius: BorderRadius.circular(8)),
-      child: TextFormField(
-        readOnly: readOnly,
-        onTap: onTap != null ? () => onTap() : null,
-        validator: (input) => validator(input),
-        controller: controller,
-        style: GoogleFonts.poppins(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Color(0xffA7A7A7)),
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 10),
-          hintStyle: GoogleFonts.poppins(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: Color(0xff7D7D7D).withOpacity(0.5)),
-          hintText: title,
-          border: InputBorder.none,
-        ),
-      ),
-    );
-  }
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          'Vehicle Number ?',
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        TextFieldWidget(
-            'Enter Vehical Number', widget.controller, (String v) {},
-            readOnly: false),
-      ],
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            'Vehicle Number ?',
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty || value.length < 4) {
+                if (value == null || value.isEmpty || value.length < 4) {
+                  _showSnackbar('Please enter a valid vehicle number', context);
+                  return '';
+                }
+              }
+              return null;
+            },
+            controller: widget.controller,
+            decoration: InputDecoration(
+              hintText: 'Enter Vehicle Number',
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 0, 18.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    widget.onNext();
+                  }
+                },
+                child: Container(
+                  height: 56.0,
+                  width: 56.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primaryColor,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  shape: CircleBorder(),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
+}
+
+void _showSnackbar(String message, BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 1),
+    ),
+  );
 }

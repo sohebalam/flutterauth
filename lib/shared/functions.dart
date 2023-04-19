@@ -150,8 +150,8 @@ Future<UserModel?> updateStatus(String phoneNumber, String role) async {
   return null;
 }
 
-Future<void> routeOnLogin(
-    String? role, bool? profile, BuildContext context) async {
+Future<void> routeOnLogin(String? role, bool? profile, String? car_register,
+    BuildContext context) async {
   if (role == 'rider') {
     if (profile == false || profile == null) {
       Navigator.pushReplacement(
@@ -169,6 +169,11 @@ Future<void> routeOnLogin(
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => DriverProfileSetup()),
+      );
+    } else if (car_register == false || car_register == null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => CarRegistrationTemplate()),
       );
     } else {
       Navigator.pushReplacement(
