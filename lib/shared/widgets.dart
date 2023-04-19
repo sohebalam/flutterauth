@@ -365,15 +365,6 @@ class PageValidationResult {
   PageValidationResult({required this.pageNumber, required this.isValid});
 }
 
-void _showSnackbar(String message, BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(message),
-      duration: Duration(seconds: 1),
-    ),
-  );
-}
-
 class ElevatedIconButton extends StatelessWidget {
   final bool isValid;
   final VoidCallback onNext;
